@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Black.NoTitleBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="MainEditText" parent="android:Theme.Black.NoTitleBar">
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
+        <item name="android:height">20dp</item>
+    </style>
+
+</resources>
