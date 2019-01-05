@@ -1,10 +1,11 @@
 # Ivan
 It's just like Fran, but fancier. And made by me.
 
-# Purpose
-I am a frequent user of Fran, but I truly dislike the fact that they have no official app. So I decided do make my own.
+## Purpose
+I am a frequent user of Fran, but I was surprised to discover that they have no official app.
+So I decided to make my own.
 
-# How does Ivan work?
+## How does Ivan work?
 This is the entire magic:
 1. The user input the search query.
 2. Ivan generates a search URL for Fran.
