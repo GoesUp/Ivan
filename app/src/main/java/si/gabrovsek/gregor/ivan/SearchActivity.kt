@@ -1,11 +1,11 @@
 package si.gabrovsek.gregor.ivan
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.KeyEvent
-import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jsoup.Jsoup
@@ -31,13 +31,10 @@ class SearchActivity : Activity() {
 
                     var results = RetrieveSearchResults(fullURL).execute().get()
 
-                    val textView: TextView = findViewById(R.id.textView3) as TextView
-
-
-                    for (r in results) {
-                        var itemTitle = r.select("span.font_xlarge a").text()
-                        textView.setText(textView.text.toString() + itemTitle + "\n")
+                    var intent = Intent(this, ResultActivity::class.java).apply {
+                        putExtra("results", results)
                     }
+                    startActivity(intent)
 
                 }
                 true
@@ -47,11 +44,10 @@ class SearchActivity : Activity() {
         }
     }
 
-    private class RetrieveSearchResults(var s: String) : AsyncTask<String, Void, Elements>() {
-        override fun doInBackground(vararg params: String?): Elements? {
+    private class RetrieveSearchResults(var s: String) : AsyncTask<String, Void, String>() {
+        override fun doInBackground(vararg params: String?): String? {
             val doc = Jsoup.connect(s.toString()).get()
-            val items = doc.body().select("div.entry-content")
-            return items
+            return doc.body().toString()
         }
     }
 
