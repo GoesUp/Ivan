@@ -2,58 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/row_padding_vertical"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/row_padding_vertical">
 
-    <TextView
-            android:id="@+id/entryTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-    />
-
-    <TextView
-            android:id="@+id/additionalHeaderInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/entryTitle"
-            android:layout_marginTop="-19dp"
-            android:layout_marginStart="7dp" android:layout_toEndOf="@+id/entryTitle"/>
-
-    <TextView
-            android:id="@+id/dictionaryName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/entryTitle"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentEnd="true" android:layout_marginEnd="18dp"/>
-
-    <TextView
-            android:id="@+id/dictionaryText"
+    <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/dictionaryName"
-            android:gravity="end"
-            android:layout_marginTop="5dp"
-    />
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-    android:layout_below="@id/dictionaryText"/>
+            card_view:cardCornerRadius="5dp"
+            card_view:cardBackgroundColor="#44444422"
+            card_view:contentPadding="8dp"
+    >
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/entryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:text="entryTitle"
+            />
+
+            <TextView
+                    android:id="@+id/additionalHeaderInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:textSize="10sp"
+                    android:layout_below="@id/entryTitle"
+                    android:layout_marginBottom="10dp"
+                    android:text="additionalHeaderInfo"
+            />
+
+            <TextView
+                    android:id="@+id/dictionaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/additionalHeaderInfo"
+                    android:text="dictionaryText"
+            />
+
+            <TextView
+                    android:id="@+id/dictionaryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dictionaryText"
+                    android:gravity="bottom|end"
+                    android:layout_marginTop="10dp"
+                    android:text="dictionaryName"
+            />
+
+        </RelativeLayout>
 
 
 
-
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>

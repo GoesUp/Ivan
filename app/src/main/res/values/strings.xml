@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Ivan</string>
     <string name="title_activity_result">ResultActivity</string>
+    <string name="loadingResults">Čarovnija poteka!</string>
+    <string name="version">v0.2</string>
+    <string name="searchBarHint">Vnesite poizvedbo…</string>
 </resources>

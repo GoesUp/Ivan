@@ -9,7 +9,6 @@ import android.view.KeyEvent
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jsoup.Jsoup
-import org.jsoup.select.Elements
 
 class SearchActivity : Activity() {
 
@@ -19,6 +18,7 @@ class SearchActivity : Activity() {
         window.setFormat(PixelFormat.RGBA_8888)
 
         setContentView(R.layout.activity_search)
+        magicText.alpha = 0.0f
 
         editText.setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -26,15 +26,23 @@ class SearchActivity : Activity() {
                     Toast.makeText(this, "Poizvedba ne sme biti prazna.", Toast.LENGTH_SHORT).show()
                 } else {
 
+                    magicText.animate().alpha(1.0f)
+
                     val preparedSearchQuery = editText.text.toString().replace(" ", "+").toLowerCase()
-                    val fullURL = "https://fran.si/iskanje?Query=" + preparedSearchQuery
+                    val fullURL = "https://fran.si/iskanje?Query=$preparedSearchQuery"
 
                     var results = RetrieveSearchResults(fullURL).execute().get()
 
-                    var intent = Intent(this, ResultActivity::class.java).apply {
-                        putExtra("results", results)
+                    if (results == "#ERROR#") {
+                        Toast.makeText(this, "Kaže, da Fran trenutno ni dosegljiv.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        var intent = Intent(this, ResultActivity::class.java).apply {
+                            putExtra("results", results)
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
+
+                    magicText.animate().alpha(0.0f)
 
                 }
                 true
@@ -46,8 +54,9 @@ class SearchActivity : Activity() {
 
     private class RetrieveSearchResults(var s: String) : AsyncTask<String, Void, String>() {
         override fun doInBackground(vararg params: String?): String? {
-            val doc = Jsoup.connect(s.toString()).get()
-            return doc.body().toString()
+            val response = Jsoup.connect(s).response()
+            if (response.statusCode() != 200) return "#ERROR#"
+            return response.body().toString()
         }
     }
 

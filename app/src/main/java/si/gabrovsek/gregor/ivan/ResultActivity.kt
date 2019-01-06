@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.Toolbar
 import org.jsoup.Jsoup
 
 class ResultActivity : Activity() {
@@ -39,7 +38,7 @@ class ResultActivity : Activity() {
             r.select("span[data-group=header]").remove()
             var properName = r.select("span.dictionary-name").text()
             r.select("span.dictionary-name").remove()
-            var resultEntry = ResultEntry(properTitle, properHeader, r.select("span").text(), properName)
+            var resultEntry = ResultEntry(properTitle, properHeader, properName, r.select("span").text())
             resultEntryList.add(resultEntry)
         }
 
