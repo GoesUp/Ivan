@@ -26,7 +26,8 @@ class SearchActivity : Activity() {
                     Toast.makeText(this, "Poizvedba ne sme biti prazna.", Toast.LENGTH_SHORT).show()
                 } else {
 
-                    magicText.animate().alpha(1.0f)
+                    val anim = magicText.animate().alpha(1.0f).setDuration(200)
+                    Thread.sleep(1000)
 
                     val preparedSearchQuery = editText.text.toString().replace(" ", "+").toLowerCase()
                     val fullURL = "https://fran.si/iskanje?Query=$preparedSearchQuery"
@@ -54,9 +55,15 @@ class SearchActivity : Activity() {
 
     private class RetrieveSearchResults(var s: String) : AsyncTask<String, Void, String>() {
         override fun doInBackground(vararg params: String?): String? {
-            val response = Jsoup.connect(s).response()
-            if (response.statusCode() != 200) return "#ERROR#"
-            return response.body().toString()
+            val basicResponse = Jsoup.connect(s)
+            val actualResponse = basicResponse.response()
+            if (actualResponse.statusCode() != 200 && actualResponse.statusCode() != 0) {
+                println("Status code: " + actualResponse.statusCode())
+                return "#ERROR#"
+            }
+
+
+            return basicResponse.get().body().toString()
         }
     }
 
