@@ -34,11 +34,18 @@ class ResultActivity : Activity() {
 
             var properTitle = r.select("span.font_xlarge a").text()
             r.select("span.font_xlarge a").remove()
+
             var properHeader = r.select("div.entry-content>span[data-group=header]").text()
             r.select("div.entry-content>span[data-group=header]").remove()
+
             var properName = r.select("span.dictionary-name").text()
+            if (properName == "Jezikovna" || properName == "Terminološka") continue
             r.select("span.dictionary-name").remove()
-            var resultEntry = ResultEntry(properTitle, properHeader, properName, r.select("span").text())
+
+            var dictionaryText = r.select("span").text()
+            if (dictionaryText == "") continue
+
+            var resultEntry = ResultEntry(properTitle, properHeader, properName, dictionaryText)
             resultEntryList.add(resultEntry)
         }
 
