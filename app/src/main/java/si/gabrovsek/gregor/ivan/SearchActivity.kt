@@ -1,10 +1,12 @@
 package si.gabrovsek.gregor.ivan
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.v4.content.ContextCompat.startActivity
 import android.view.KeyEvent
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_search.*
@@ -26,24 +28,15 @@ class SearchActivity : Activity() {
                     Toast.makeText(this, "Poizvedba ne sme biti prazna.", Toast.LENGTH_SHORT).show()
                 } else {
 
-                    val anim = magicText.animate().alpha(1.0f).setDuration(200)
-                    Thread.sleep(1000)
+                    val appearingAnimation = magicText.animate()
+                    appearingAnimation.duration = 1000
+                    appearingAnimation.alpha(1.0f)
+                    appearingAnimation.start()
 
                     val preparedSearchQuery = editText.text.toString().replace(" ", "+").toLowerCase()
                     val fullURL = "https://fran.si/iskanje?Query=$preparedSearchQuery"
 
-                    var results = RetrieveSearchResults(fullURL).execute().get()
-
-                    if (results == "#ERROR#") {
-                        Toast.makeText(this, "Kaže, da Fran trenutno ni dosegljiv.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        var intent = Intent(this, ResultActivity::class.java).apply {
-                            putExtra("results", results)
-                        }
-                        startActivity(intent)
-                    }
-
-                    magicText.animate().alpha(0.0f)
+                    RetrieveSearchResults(fullURL, this).execute()
 
                 }
                 true
@@ -53,18 +46,46 @@ class SearchActivity : Activity() {
         }
     }
 
-    private class RetrieveSearchResults(var s: String) : AsyncTask<String, Void, String>() {
+    private class RetrieveSearchResults(
+        val s: String,
+        val context: Context
+    ) : AsyncTask<String, Int, String>() {
+
         override fun doInBackground(vararg params: String?): String? {
+
             val basicResponse = Jsoup.connect(s)
-            val actualResponse = basicResponse.response()
-            if (actualResponse.statusCode() != 200 && actualResponse.statusCode() != 0) {
-                println("Status code: " + actualResponse.statusCode())
+            val stCode = basicResponse.response().statusCode()
+            publishProgress(stCode)
+            if (stCode != 200 && stCode != 0) {
                 return "#ERROR#"
             }
 
+            var intent = Intent(context, ResultActivity::class.java).apply {
+                putExtra("results", basicResponse.get().body().toString())
+            }
 
-            return basicResponse.get().body().toString()
+            startActivity(context, intent, Bundle())
+            return ""
         }
+
+        override fun onProgressUpdate(vararg values: Int?) {
+            super.onProgressUpdate(*values)
+
+            if (values[0] != 200 && values[0] != 0) {
+                Toast.makeText(context, "Kaže, da Fran trenutno ni dosegljiv.", Toast.LENGTH_SHORT).show()
+                println("Status code: " + values[0])
+            }
+
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val disappearingAnimation = magicText.animate()
+        disappearingAnimation.duration = 0
+        disappearingAnimation.alpha(0.0f)
+        disappearingAnimation.start()
     }
 
 
