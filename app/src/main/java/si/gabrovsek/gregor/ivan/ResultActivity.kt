@@ -34,8 +34,8 @@ class ResultActivity : Activity() {
 
             var properTitle = r.select("span.font_xlarge a").text()
             r.select("span.font_xlarge a").remove()
-            var properHeader = r.select("span[data-group=header]").text()
-            r.select("span[data-group=header]").remove()
+            var properHeader = r.select("div.entry-content>span[data-group=header]").text()
+            r.select("div.entry-content>span[data-group=header]").remove()
             var properName = r.select("span.dictionary-name").text()
             r.select("span.dictionary-name").remove()
             var resultEntry = ResultEntry(properTitle, properHeader, properName, r.select("span").text())
