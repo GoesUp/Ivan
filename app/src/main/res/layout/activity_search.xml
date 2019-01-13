@@ -6,9 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SearchActivity"
+        android:id="@+id/search_layout"
 
-        android:background="@drawable/gradient"
->
+        android:background="@drawable/gradient">
 
     <TextView
             android:layout_width="wrap_content"
@@ -21,7 +21,9 @@
             app:layout_constraintVertical_bias="0.25"
             android:textSize="75sp"
             android:fontFamily="cursive"
-            android:id="@+id/textView"/>
+            android:id="@+id/textView"
+            android:textColor="@android:color/black"/>
+
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,8 +44,8 @@
             android:background="@drawable/search_bar"
             android:theme="@style/MainEditText"
             android:focusedByDefault="true"
-            android:textColor="@android:color/darker_gray"
-    />
+            android:textColor="@android:color/black"
+            android:importantForAutofill="no"/>
 
     <TextView
             android:text="@string/loadingResults"
@@ -56,9 +58,9 @@
             android:layout_marginStart="151dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="152dp"
-            android:fontFamily="cursive"
-            android:textSize="20sp"
-    />
+            android:textSize="13sp"
+            android:textStyle="italic"
+            android:textColor="@android:color/black"/>
 
     <TextView
             android:text="@string/version"
@@ -72,6 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText"
             app:layout_constraintVertical_bias="0.95"
-    />
+            android:textColor="@android:color/darker_gray"/>
+
 
 </android.support.constraint.ConstraintLayout>

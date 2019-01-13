@@ -19,7 +19,7 @@
             card_view:contentPaddingLeft="8dp"
             card_view:contentPaddingTop="12dp"
             card_view:contentPaddingRight="12dp"
-            card_view:contentPaddingBottom="12dp"
+            card_view:contentPaddingBottom="8dp"
             card_view:cardElevation="0dp"
     >
 
@@ -43,6 +43,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    android:layout_marginBottom="4dp"
                     android:text="entryTitle"
             />
 
@@ -52,16 +53,22 @@
                     android:layout_height="wrap_content"
                     android:textStyle="italic"
                     android:textSize="12sp"
-                    android:layout_below="@id/entryTitle"
-                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorSecondary"
+                    android:layout_toEndOf="@id/entryTitle"
+                    android:layout_marginStart="8dp"
+                    android:gravity="bottom|start"
                     android:text="additionalHeaderInfo"
+                    android:paddingBottom="3dp"
+                    android:layout_alignBottom="@id/entryTitle"
             />
 
             <TextView
                     android:id="@+id/dictionaryText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/additionalHeaderInfo"
+                    android:layout_below="@id/entryTitle"
+                    android:textColor="@color/colorNormal"
+                    android:justificationMode="inter_word"
                     android:text="dictionaryText"
             />
 
@@ -73,6 +80,7 @@
                     android:gravity="bottom|end"
                     android:layout_marginTop="10dp"
                     android:textStyle="italic"
+                    android:textColor="@color/colorNormal"
                     android:text="dictionaryName"
             />
 

@@ -27,23 +27,33 @@ class SearchActivity : Activity() {
                 if (editText.text.isEmpty()) {
                     Toast.makeText(this, "Poizvedba ne sme biti prazna.", Toast.LENGTH_SHORT).show()
                 } else {
-
-                    val appearingAnimation = magicText.animate()
-                    appearingAnimation.duration = 1000
-                    appearingAnimation.alpha(1.0f)
-                    appearingAnimation.start()
-
-                    val preparedSearchQuery = editText.text.toString().replace(" ", "+").toLowerCase()
-                    val fullURL = "https://fran.si/iskanje?Query=$preparedSearchQuery"
-
-                    RetrieveSearchResults(fullURL, this).execute()
-
+                    initiateSearch(editText.text.toString())
                 }
                 true
             } else {
                 false
             }
         }
+//
+//        historyFAB.setOnClickListener { view ->
+//            Snackbar.make(view, "History:", Snackbar.LENGTH_INDEFINITE)
+//                .setAction("History1", { view ->
+//                    println("heh")
+//                })
+//                .show()
+//        }
+    }
+
+    private fun initiateSearch(query: String) {
+        val appearingAnimation = magicText.animate()
+        appearingAnimation.duration = 1000
+        appearingAnimation.alpha(1.0f)
+        appearingAnimation.start()
+
+        val preparedSearchQuery = query.replace(" ", "+").toLowerCase()
+        val fullURL = "https://fran.si/iskanje?Query=$preparedSearchQuery"
+
+        RetrieveSearchResults(fullURL, this).execute()
     }
 
     private class RetrieveSearchResults(

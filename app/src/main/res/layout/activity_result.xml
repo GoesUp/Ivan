@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ResultActivity"
-
         android:background="@drawable/gradient"
 >
+
+    <TextView
+            android:id="@+id/resultTopText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#77b2dfdb"
+            android:elevation="4dp"
+            android:textSize="20sp"
+            android:padding="15dp"
+            android:paddingTop="13dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/resultTopText"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/searchResultsEntries"
             android:scrollbars="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-</android.support.constraint.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/resultTopText"
+    />
+
+</RelativeLayout>

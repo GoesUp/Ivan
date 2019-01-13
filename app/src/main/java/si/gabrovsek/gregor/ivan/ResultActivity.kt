@@ -18,7 +18,7 @@ class ResultActivity : Activity() {
 
         recyclerView = findViewById(R.id.searchResultsEntries)
         srAdapter = SearchResultsAdapter(resultEntryList)
-        var srLayoutManager = LinearLayoutManager(applicationContext)
+        val srLayoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = srLayoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = srAdapter
@@ -27,25 +27,32 @@ class ResultActivity : Activity() {
     }
 
     private fun prepareSearchData() {
-        var parentResult = intent.getStringExtra("results")
+        val parentResult = intent.getStringExtra("results")
+        val results = Jsoup.parse(parentResult).select("div.list-group-item")
 
-        var results = Jsoup.parse(parentResult).select("div.list-group-item")
+        var unwantedDictionaries = arrayOf("Jezikovna", "Terminološka", "Besedje16", "SLA 1", "SLA 2")
+
         for (r in results) {
 
-            var properTitle = r.select("span.font_xlarge a").text()
+            val properTitle = r.select("span.font_xlarge a").text()
             r.select("span.font_xlarge a").remove()
 
-            var properHeader = r.select("div.entry-content>span[data-group=header]").text()
+            val properHeader = r.select("div.entry-content>span[data-group=header]").text()
             r.select("div.entry-content>span[data-group=header]").remove()
 
-            var properName = r.select("span.dictionary-name").text()
-            if (properName == "Jezikovna" || properName == "Terminološka") continue
+            val properName = r.select("span.dictionary-name").text()
+            if (properName in unwantedDictionaries) continue
             r.select("span.dictionary-name").remove()
 
-            var dictionaryText = r.select("span").text()
+            // Removes the subscripted numbers next to entry names. See: "pet".
+            r.select("div.entry-content>span.font_xsmal").remove()
+            r.select("div.entry-content>span.color_orange").remove()
+
+            val dictionaryText = r.select("div.entry-content>span").text()
             if (dictionaryText == "") continue
 
-            var resultEntry = ResultEntry(properTitle, properHeader, properName, dictionaryText)
+
+            val resultEntry = ResultEntry(properTitle, properHeader, properName, dictionaryText)
             resultEntryList.add(resultEntry)
         }
 
