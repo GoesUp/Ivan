@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import kotlinx.android.synthetic.main.activity_result.*
 import org.jsoup.Jsoup
 
 class ResultActivity : Activity() {
@@ -31,6 +33,13 @@ class ResultActivity : Activity() {
         val results = Jsoup.parse(parentResult).select("div.list-group-item")
 
         var unwantedDictionaries = arrayOf("Jezikovna", "Terminološka", "Besedje16", "SLA 1", "SLA 2")
+
+        if (results.size != 0) {
+            noResultsText.visibility = View.INVISIBLE
+        } else {
+            noResultsText.visibility = View.VISIBLE
+            return
+        }
 
         for (r in results) {
 
